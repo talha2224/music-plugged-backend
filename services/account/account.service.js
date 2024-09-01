@@ -12,12 +12,14 @@ const bcrypt = require("bcryptjs")
 const registerUser = async (req,res)=>{
     try {
         let {name,email,password} = req.body
+        console.log(name,email,password,'name,email,password')
         let userExits = await accountModel.findOne({email:email})
         if(userExits){
             return res.status(403).json({msg:"User Exits",data:null,code:403})
         }
         let hash = await bcrypt.hash(password,10)
         let create = await accountModel.create({name,email,password:hash})
+        console.log(create,'create')
         return res.status(200).json({msg:"User Created",data:create,code:200})
     } 
     catch (error) {
@@ -46,7 +48,7 @@ const loginUser = async (req,res)=>{
 
 const getUser = async(req,res)=>{
     try {
-        let userExits = await accountModel.findById(req.params.id).populate("prefrrence")
+        let userExits = await accountModel.findById(req.params.id)
         if(!userExits){
             return res.status(404).json({msg:"User Not Exits",data:null,code:404})
         }

@@ -5,7 +5,7 @@ const { musicModel } = require("../../models")
 const createMusic = async (req,res)=>{
     try {
         let {title,description,artist,category,listners,album} = req.body
-        if (req?.files?.image[0] && req?.files?.video[0]){
+        if (req?.files?.image[0] && req?.files?.song[0]){
             let image = req?.files?.image[0]
             let song = req?.files?.song[0]
             let imageUrl = await uploadFile(image)
@@ -47,7 +47,7 @@ const getSingleMusic = async (req,res)=>{
 
 const getMusicByCategory = async (req,res)=>{
     try {
-      let music = await musicModel.find({category:req.params.id}).populate("artist").populate("category").populate("album")
+      let music = await musicModel.find({category:req.params.id}).random().populate("artist").populate("category").populate("album")
       return res.status(200).json({msg:null,data:music,code:200})  
     } 
     catch (error) {
@@ -57,7 +57,7 @@ const getMusicByCategory = async (req,res)=>{
 
 const getMusicByArtist = async (req,res)=>{
     try {
-      let music = await musicModel.find({artist:req.params.id}).populate("artist").populate("category").populate("album")
+      let music = await musicModel.find({artist:req.params.id}).random().populate("artist").populate("category").populate("album")
       return res.status(200).json({msg:null,data:music,code:200})  
     } 
     catch (error) {
@@ -67,7 +67,7 @@ const getMusicByArtist = async (req,res)=>{
 
 const getMusicByAlbum= async (req,res)=>{
     try {
-      let music = await musicModel.find({album:req.params.id}).populate("artist").populate("category").populate("album")
+      let music = await musicModel.find({album:req.params.id}).random().populate("artist").populate("category").populate("album")
       return res.status(200).json({msg:null,data:music,code:200})  
     } 
     catch (error) {

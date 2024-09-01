@@ -3,6 +3,6 @@ const { registerUser, loginUser, getUser } = require('../../services/account/acc
 
 router.post('/register',registerUser)
 router.post('/login',loginUser)
-router.post('/single/:id',getUser)
+router.get('/single/:id',getUser)
 
 module.exports = router
