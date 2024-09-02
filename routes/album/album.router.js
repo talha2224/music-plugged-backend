@@ -3,7 +3,7 @@ const { multipleupload } = require('../../config/multer.config')
 const { createAlbum, getAlbum, getSingleAlbum, getAlbumByCategory, getAlbumByArtist } = require('../../services/album/album.service')
 
 
-router.post("/create",multipleupload.fields([{name:"image",maxCount:1}]),createAlbum)
+router.post("/create",multipleupload.single("image"),createAlbum)
 router.get("/all",getAlbum)
 router.get("/single/:id",getSingleAlbum)
 router.get("/category/:id",getAlbumByCategory)
