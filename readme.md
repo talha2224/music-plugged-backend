@@ -55,3 +55,13 @@ GET http://localhost:5000/api/v1/history/all/:id ( GETTING ALL HISTORY BY USERID
 <!-- USER LIKE   -->
 POST http://localhost:5000/api/v1/history/create (SAVING HISTORY ); body = {musicId,userId}
 GET http://localhost:5000/api/v1/like/all/:id ( GETTING ALL HISTORY BY USERID)
+
+<!-- FOLLOW ARTIST   -->
+POST http://localhost:5000/api/v1/artist/follow (FOLLOW ARTIST); body = {artistId,userId}
+PUT http://localhost:5000/api/v1/artist/unfollow/:id (UN FOLLOW ARTIST);
+GET http://localhost:5000/api/v1/artist/follow/:userId/:artistId (GET FOLLOW ARTIST);
+
+
+<!-- MOOD AND GENRES   -->
+POST http://localhost:5000/api/v1/mood/create (Create MOOD); body = {title}
+GET http://localhost:5000/api/v1/mood/all (GET ALL MOOD);

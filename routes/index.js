@@ -9,6 +9,8 @@ const playlistRoutes = require("./playlist/playlist.router")
 const palylistMusicRoutes = require("./playlist/music.router")
 const historyRoutes = require("./history/history.router")
 const likeRoutes = require("./like/like.router")
+const followRoutes = require("./follow/follow.router")
+const moodRoutes = require("./mood/mood.router")
 
 
 
@@ -23,6 +25,8 @@ combineRouter.use("/playlist",playlistRoutes)
 combineRouter.use("/playlist/music",palylistMusicRoutes)
 combineRouter.use("/history",historyRoutes)
 combineRouter.use("/like",likeRoutes)
+combineRouter.use("/artist",followRoutes)
+combineRouter.use("/mood",moodRoutes)
 
 
 

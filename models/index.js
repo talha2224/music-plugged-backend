@@ -8,5 +8,8 @@ const historyModel = require("./history/history.model")
 const playlistModel = require("./playlist/playlist.model")
 const playlistMusicModel = require("./playlist/playlist_music.model")
 const likeMusicModel = require("./like/like.model")
+const followModel = require("./follow/follow.model")
+const moodModel = require("./mood/mood.model")
 
-module.exports = {accountModel,artistModel,categoryModel,musicModel,albumModel,historyModel,savedModel,playlistModel,playlistMusicModel,likeMusicModel}
+
+module.exports = {accountModel,artistModel,categoryModel,musicModel,albumModel,historyModel,savedModel,playlistModel,playlistMusicModel,likeMusicModel,followModel,moodModel}
