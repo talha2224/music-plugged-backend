@@ -65,3 +65,7 @@ GET http://localhost:5000/api/v1/artist/follow/:userId/:artistId (GET FOLLOW ART
 <!-- MOOD AND GENRES   -->
 POST http://localhost:5000/api/v1/mood/create (Create MOOD); body = {title}
 GET http://localhost:5000/api/v1/mood/all (GET ALL MOOD);
+
+
+<!-- SUBSCRIPTION  -->
+POST http://localhost:5000/api/v1/account/store/subscription ( FOR STORING SUBSCRIPTION); body = {userId,subId,subEndDate} subEndDate in milliseconds Number format

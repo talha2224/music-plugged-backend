@@ -111,4 +111,12 @@ const createSubscription = async (req, res) => {
     }
 }
 
-module.exports = { registerUser, loginUser, getUser, createSubscription }
+
+const storeSubscription = async (req,res)=>{
+    let {userId,subId,subEndDate} = req.body
+    let update = await accountModel.findByIdAndUpdate(userId,{subId,subEndDate},{$new:true})
+    return res.status(200).json({ msg: "User Login", data: update, code: 200 })
+
+}
+
+module.exports = { registerUser, loginUser, getUser, createSubscription,storeSubscription }
