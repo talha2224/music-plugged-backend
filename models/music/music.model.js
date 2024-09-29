@@ -9,7 +9,8 @@ const musicSchema = mongoose.Schema({
     album:{type:mongoose.Schema.Types.ObjectId,ref:"Album",default:null},
     listners:{type:Number,required:true},
     coverImage:{type:String,required:true},
-    music:{type:String,required:true}
+    music:{type:String,required:true},
+    type:{type:String,default:"audio"}
 },{timestamps:true})
 
 
