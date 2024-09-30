@@ -15,7 +15,7 @@ const createMood = async (req,res)=>{
 
 const getMood = async(req,res)=>{
     try {
-        let data = await followModel.find({})
+        let data = await moodModel.find({})
         return res.status(200).json({data:data,msg:null,code:200})
     } 
     catch (error) {
