@@ -26,7 +26,7 @@ const unFollowArtist = async (req,res)=>{
 
 const getFollowArtist = async(req,res)=>{
     try {
-        let data = await followModel.find({userId:req.params.userId,artistId:req.params.artistId}).populate("musicId").populate("artistId")
+        let data = await followModel.find({userId:req.params.userId,artistId:req.params.artistId}).populate("artistId")
         return res.status(200).json({data:data,msg:null,code:200})
     } 
     catch (error) {
