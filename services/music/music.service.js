@@ -4,13 +4,13 @@ const { musicModel } = require("../../models")
 
 const createMusic = async (req,res)=>{
     try {
-        let {title,description,artist,category,listners,album,type} = req.body
+        let {title,description,artist,category,listners,album,musicType} = req.body
         if (req?.files?.image[0] && req?.files?.song[0]){
             let image = req?.files?.image[0]
             let song = req?.files?.song[0]
             let imageUrl = await uploadFile(image)
             let musicUrl = await uploadFile(song)
-            let data = await musicModel.create({title,description,artist,listners,category,coverImage:imageUrl,music:musicUrl,album,type})
+            let data = await musicModel.create({title,description,artist,listners,category,coverImage:imageUrl,music:musicUrl,album,musicType})
             if(data){
                 return res.status(200).json({msg:null,data:data,code:200})
             }

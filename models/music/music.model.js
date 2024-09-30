@@ -10,7 +10,7 @@ const musicSchema = mongoose.Schema({
     listners:{type:Number,required:true},
     coverImage:{type:String,required:true},
     music:{type:String,required:true},
-    type:{type:String,default:"audio"}
+    musicType:{type:String,default:"audio"}
 },{timestamps:true})
 
 
