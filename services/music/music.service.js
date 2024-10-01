@@ -67,7 +67,7 @@ const getMusicByArtist = async (req,res)=>{
 
 const getMusicByAlbum= async (req,res)=>{
     try {
-      let music = await musicModel.find({album:req.params.id}).random().populate("artist").populate("category").populate("album")
+      let music = await musicModel.find({album:req.params.id}).populate("artist").populate("category").populate("album")
       return res.status(200).json({msg:null,data:music,code:200})  
     } 
     catch (error) {
