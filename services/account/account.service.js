@@ -1,8 +1,7 @@
-const { accountModel } = require("../../models");
+const { accountModel, shortMusicModel } = require("../../models");
 const bcrypt = require("bcryptjs");
 const { uploadFile } = require("../../utils/function");
 const stripe = require("stripe")("sk_test_51OjJpTASyMRcymO6FVBewDoB2x4Wi5tq5uX5PYSfkAC2pU0sZvWJbZIqGoMTnzEYYFjFh4jbcWYD3OyFc761otRt00tX4j1UO2");
-
 
 
 
@@ -201,10 +200,14 @@ const getUser = async (req, res) => {
             return res.status(404).json({ msg: "User Not Exists", data: null, code: 404 });
         }
 
+        // fetch all shorts by this user
+        const shorts = await shortMusicModel.find({ user_id: req.params.id });
+
         const userData = {
             ...user.toObject(),
             followersCount: user.followers.length,
             followingCount: user.following.length,
+            shorts: shorts, // attach shorts here
         };
 
         return res.status(200).json({ msg: null, data: userData, code: 200 });
@@ -212,5 +215,6 @@ const getUser = async (req, res) => {
         return res.status(500).json({ msg: error.message, code: 500 });
     }
 };
+
 
 module.exports = { registerUser, loginUser, getUser, createSubscription, storeSubscription, updateUser, followUser, unfollowUser }
