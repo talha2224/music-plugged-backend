@@ -11,6 +11,7 @@ const historyRoutes = require("./history/history.router")
 const likeRoutes = require("./like/like.router")
 const followRoutes = require("./follow/follow.router")
 const moodRoutes = require("./mood/mood.router")
+const eventRoutes = require("./event/event.router")
 
 
 
@@ -27,6 +28,7 @@ combineRouter.use("/history",historyRoutes)
 combineRouter.use("/like",likeRoutes)
 combineRouter.use("/artist",followRoutes)
 combineRouter.use("/mood",moodRoutes)
+combineRouter.use("/event",eventRoutes)
 
 
 
