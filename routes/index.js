@@ -12,6 +12,7 @@ const likeRoutes = require("./like/like.router")
 const followRoutes = require("./follow/follow.router")
 const moodRoutes = require("./mood/mood.router")
 const eventRoutes = require("./event/event.router")
+const shortMusicRoutes = require("./shorts/shortMusic.router")
 
 
 
@@ -29,6 +30,7 @@ combineRouter.use("/like",likeRoutes)
 combineRouter.use("/artist",followRoutes)
 combineRouter.use("/mood",moodRoutes)
 combineRouter.use("/event",eventRoutes)
+combineRouter.use("/shorts",shortMusicRoutes)
 
 
 

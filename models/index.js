@@ -11,6 +11,6 @@ const likeMusicModel = require("./like/like.model")
 const followModel = require("./follow/follow.model")
 const moodModel = require("./mood/mood.model")
 const eventModel = require("./event/event.model")
+const shortMusicModel = require("./shorts/shortMusic.model")
 
-
-module.exports = { accountModel, artistModel, categoryModel, musicModel, albumModel, historyModel, savedModel, playlistModel, playlistMusicModel, likeMusicModel, followModel, moodModel, eventModel }
+module.exports = { accountModel, artistModel, categoryModel, musicModel, albumModel, historyModel, savedModel, playlistModel, playlistMusicModel, likeMusicModel, followModel, moodModel, eventModel, shortMusicModel }
