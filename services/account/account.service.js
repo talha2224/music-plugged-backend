@@ -1,5 +1,6 @@
 const { accountModel } = require("../../models");
-const bcrypt = require("bcryptjs")
+const bcrypt = require("bcryptjs");
+const { uploadFile } = require("../../utils/function");
 const stripe = require("stripe")("sk_test_51OjJpTASyMRcymO6FVBewDoB2x4Wi5tq5uX5PYSfkAC2pU0sZvWJbZIqGoMTnzEYYFjFh4jbcWYD3OyFc761otRt00tX4j1UO2");
 
 
@@ -46,7 +47,6 @@ const loginUser = async (req, res) => {
     }
 }
 
-
 const getUser = async (req, res) => {
     try {
         let userExits = await accountModel.findById(req.params.id)
@@ -60,6 +60,34 @@ const getUser = async (req, res) => {
         return error
     }
 }
+
+const updateUser = async (req, res) => {
+    try {
+        const { id } = req.params;
+        let user = await accountModel.findById(id);
+        if (!user) {
+            return res.status(404).json({ msg: "User Not Found", data: null, code: 404 });
+        }
+
+        let { name, bio } = req.body;
+        let updateData = {};
+
+        if (name) updateData.name = name;
+        if (bio) updateData.bio = bio;
+
+        if (req.file) {
+            let imageUrl = await uploadFile(req.file);
+            updateData.profile_image = imageUrl;
+        }
+
+        let updatedUser = await accountModel.findByIdAndUpdate(id, updateData, { new: true });
+
+        return res.status(200).json({ msg: "Profile Updated", data: updatedUser, code: 200 });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ msg: error.message, code: 500 });
+    }
+};
 
 const createSubscription = async (req, res) => {
     try {
@@ -112,11 +140,11 @@ const createSubscription = async (req, res) => {
 }
 
 
-const storeSubscription = async (req,res)=>{
-    let {userId,subId,subEndDate} = req.body
-    let update = await accountModel.findByIdAndUpdate(userId,{subId,subEndDate},{$new:true})
+const storeSubscription = async (req, res) => {
+    let { userId, subId, subEndDate } = req.body
+    let update = await accountModel.findByIdAndUpdate(userId, { subId, subEndDate }, { $new: true })
     return res.status(200).json({ msg: "User Login", data: update, code: 200 })
 
 }
 
-module.exports = { registerUser, loginUser, getUser, createSubscription,storeSubscription }
+module.exports = { registerUser, loginUser, getUser, createSubscription, storeSubscription, updateUser }

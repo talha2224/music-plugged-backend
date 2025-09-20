@@ -7,7 +7,8 @@ const accountSchema = mongoose.Schema({
     password:{type:String,required:true},
     subId:{type:String,default:null},
     subEndDate:{type:Number,default:null},
-    // prefrrence:{type:[mongoose.Schema.Types.ObjectId],ref:"Artist"}
+    profile_image:{type:String,default:null},
+    bio:{type:String,default:null},
 })
 
 
