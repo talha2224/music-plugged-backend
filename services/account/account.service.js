@@ -47,19 +47,6 @@ const loginUser = async (req, res) => {
     }
 }
 
-const getUser = async (req, res) => {
-    try {
-        let userExits = await accountModel.findById(req.params.id)
-        if (!userExits) {
-            return res.status(404).json({ msg: "User Not Exits", data: null, code: 404 })
-        }
-        return res.status(200).json({ msg: null, data: userExits, code: 200 })
-
-    }
-    catch (error) {
-        return error
-    }
-}
 
 const updateUser = async (req, res) => {
     try {
@@ -139,7 +126,6 @@ const createSubscription = async (req, res) => {
     }
 }
 
-
 const storeSubscription = async (req, res) => {
     let { userId, subId, subEndDate } = req.body
     let update = await accountModel.findByIdAndUpdate(userId, { subId, subEndDate }, { $new: true })
@@ -147,4 +133,84 @@ const storeSubscription = async (req, res) => {
 
 }
 
-module.exports = { registerUser, loginUser, getUser, createSubscription, storeSubscription, updateUser }
+const followUser = async (req, res) => {
+    try {
+        const { userId, targetId } = req.body;
+
+        if (userId === targetId) {
+            return res.status(400).json({ msg: "You cannot follow yourself", code: 400 });
+        }
+
+        const user = await accountModel.findById(userId);
+        const target = await accountModel.findById(targetId);
+
+        if (!user || !target) {
+            return res.status(404).json({ msg: "User not found", code: 404 });
+        }
+
+        if (user.following.includes(targetId)) {
+            return res.status(400).json({ msg: "Already following this user", code: 400 });
+        }
+
+        user.following.push(targetId);
+        target.followers.push(userId);
+
+        await user.save();
+        await target.save();
+
+        return res.status(200).json({ msg: "Followed successfully", code: 200 });
+    } catch (error) {
+        return res.status(500).json({ msg: error.message, code: 500 });
+    }
+};
+
+const unfollowUser = async (req, res) => {
+    try {
+        const { userId, targetId } = req.body;
+
+        const user = await accountModel.findById(userId);
+        const target = await accountModel.findById(targetId);
+
+        if (!user || !target) {
+            return res.status(404).json({ msg: "User not found", code: 404 });
+        }
+
+        if (!user.following.includes(targetId)) {
+            return res.status(400).json({ msg: "You are not following this user", code: 400 });
+        }
+
+        user.following = user.following.filter(id => id.toString() !== targetId);
+        target.followers = target.followers.filter(id => id.toString() !== userId);
+
+        await user.save();
+        await target.save();
+
+        return res.status(200).json({ msg: "Unfollowed successfully", code: 200 });
+    } catch (error) {
+        return res.status(500).json({ msg: error.message, code: 500 });
+    }
+};
+
+const getUser = async (req, res) => {
+    try {
+        const user = await accountModel.findById(req.params.id)
+            .populate("followers", "name profile_image")
+            .populate("following", "name profile_image");
+
+        if (!user) {
+            return res.status(404).json({ msg: "User Not Exists", data: null, code: 404 });
+        }
+
+        const userData = {
+            ...user.toObject(),
+            followersCount: user.followers.length,
+            followingCount: user.following.length,
+        };
+
+        return res.status(200).json({ msg: null, data: userData, code: 200 });
+    } catch (error) {
+        return res.status(500).json({ msg: error.message, code: 500 });
+    }
+};
+
+module.exports = { registerUser, loginUser, getUser, createSubscription, storeSubscription, updateUser, followUser, unfollowUser }
