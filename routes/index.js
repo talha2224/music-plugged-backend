@@ -13,6 +13,8 @@ const followRoutes = require("./follow/follow.router")
 const moodRoutes = require("./mood/mood.router")
 const eventRoutes = require("./event/event.router")
 const shortMusicRoutes = require("./shorts/shortMusic.router")
+const episodeRoutes = require("./episodes/episodes.router")
+const savedRoutes = require("./save/save.router")
 
 
 
@@ -31,6 +33,8 @@ combineRouter.use("/artist",followRoutes)
 combineRouter.use("/mood",moodRoutes)
 combineRouter.use("/event",eventRoutes)
 combineRouter.use("/shorts",shortMusicRoutes)
+combineRouter.use("/episodes",episodeRoutes)
+combineRouter.use("/saved",savedRoutes)
 
 
 
